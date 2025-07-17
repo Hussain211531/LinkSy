@@ -5,6 +5,8 @@ import { isLoggedIn } from "../helpers/authHelper";
 import Comment from "./Comment";
 import Loading from "./Loading";
 import SortBySelect from "./SortBySelect";
+import commonButtonStyles from "../styles/buttonStyles";
+
 
 const CommentBrowser = (props) => {
   const [comments, setComments] = useState([]);

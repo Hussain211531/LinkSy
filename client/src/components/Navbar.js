@@ -8,10 +8,11 @@ import {
   Button,
   InputAdornment,
 } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, fontWeight } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import "react-icons/ai";
 import "react-icons/ri";
+import "../index.css";
 import {
   AiFillFileText,
   AiFillHome,
@@ -66,93 +67,121 @@ const Navbar = () => {
     setSearchIcon(!searchIcon);
   };
 
-  return (
-    <Stack mb={2}>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
+ return (
+  <Stack
+    className="navbar-gradient"
+    mb={2}
+    px={2}
+    py={1.5}
+    direction="row"
+    alignItems="center"
+    justifyContent="space-between"
+    sx={{
+      backgroundColor: "#C599B6",
+      color: "white",
+      fontWeight:"bold",
+      borderRadius: 2,
+      boxShadow: 2,
+      flexWrap: "wrap",
+    }}
+  >
+    {/* Left: Logo and App Name */}
+    <HorizontalStack onClick={() => navigate("/")} sx={{ cursor: "pointer" }}>
+      <RiContrast2Line size={33} color="#fff" />
+      <Typography
         sx={{
-          pt: 2,
-          pb: 0,
+          display: mobile ? "none" : "block",
+          fontWeight: 600,
+          marginLeft: 1,
         }}
-        spacing={!mobile ? 2 : 0}
+        variant={navbarWidth ? "h6" : "h5"}
       >
-        <HorizontalStack>
-          <AiFillFileText
-            size={33}
-            color={theme.palette.primary.main}
-            onClick={() => navigate("/")}
-          />
-          <Typography
-            sx={{ display: mobile ? "none" : "block" }}
-            variant={navbarWidth ? "h6" : "h4"}
-            mr={1}
-            color={theme.palette.primary.main}
-          >
-            {/* <Link to="/" color="inherit"> */}
-              PostIt
-            {/* </Link> */}
-          </Typography>
-        </HorizontalStack>
+        LinkSy
+      </Typography>
+    </HorizontalStack>
 
-        {!navbarWidth && (
-          <Box component="form" onSubmit={handleSubmit}>
-            <TextField
-              size="small"
-              label="Search for posts..."
-              sx={{ flexGrow: 1, maxWidth: 300 }}
-              onChange={handleChange}
-              value={search}
-            />
-          </Box>
-        )}
+    {/* Center: Search Box */}
+    {!mobile && !navbarWidth && (
+      <Box component="form" onSubmit={handleSubmit} mx={2}>
+        <TextField
+          size="small"
+          label="Search posts"
+          variant="outlined"
+          onChange={handleChange}
+          value={search}
+          sx={{
+            backgroundColor: "#fff",
+            borderRadius: 1,
+            input: { padding: "8px 12px" },
+            width: 250,
+          }}
+        />
+      </Box>
+    )}
 
-        <HorizontalStack>
-          {mobile && (
-            <IconButton onClick={handleSearchIcon}>
-              <AiOutlineSearch />
-            </IconButton>
-          )}
-
-          <IconButton component={Link} to={"/"}>
-            <AiFillHome />
-          </IconButton>
-          {user ? (
-            <>
-              <IconButton component={Link} to={"/messenger"}>
-                <AiFillMessage />
-              </IconButton>
-              <IconButton component={Link}  to={"/users/" + username}>
-                <UserAvatar width={30} height={30} username={user.username} />
-              </IconButton>
-              <Button onClick={handleLogout}>Logout</Button>
-            </>
-          ) : (
-            <>
-              <Button variant="text" sx={{ minWidth: 80 }} href="/signup">
-                Sign Up
-              </Button>
-              <Button variant="text" sx={{ minWidth: 65 }} href="/login">
-                Login
-              </Button>
-            </>
-          )}
-        </HorizontalStack>
-      </Stack>
-      {navbarWidth && searchIcon && (
-        <Box component="form" onSubmit={handleSubmit} mt={2}>
-          <TextField
-            size="small"
-            label="Search for posts..."
-            fullWidth
-            onChange={handleChange}
-            value={search}
-          />
-        </Box>
+    {/* Right: Icons and Actions */}
+    <HorizontalStack spacing={1}>
+      {mobile && (
+        <IconButton onClick={handleSearchIcon} sx={{ color: "#fff" }}>
+          <AiOutlineSearch />
+        </IconButton>
       )}
-    </Stack>
-  );
+      <IconButton component={Link} to={"/"} sx={{ color: "#fff" }}>
+        <AiFillHome />
+      </IconButton>
+
+      {user ? (
+        <>
+          <IconButton component={Link} to={"/messenger"} sx={{ color: "#fff" }}>
+            <AiFillMessage />
+          </IconButton>
+          <IconButton
+            component={Link}
+            to={"/users/" + username}
+            sx={{ padding: 0 }}
+          >
+            <UserAvatar width={30} height={30} username={user.username} />
+          </IconButton>
+          <Button onClick={handleLogout} sx={{ color: "#fff" }}>
+            Logout
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button
+            variant="outlined"
+            sx={{ color: "#fff", borderColor: "#fff" }}
+            href="/signup"
+          >
+            Sign Up
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ color: "#fff", borderColor: "#fff" }}
+            href="/login"
+          >
+            Login
+          </Button>
+        </>
+      )}
+    </HorizontalStack>
+
+    {/* Mobile search input */}
+    {navbarWidth && searchIcon && (
+      <Box component="form" onSubmit={handleSubmit} mt={1} width="100%">
+        <TextField
+          size="small"
+          label="Search posts"
+          fullWidth
+          onChange={handleChange}
+          value={search}
+          sx={{ backgroundColor: "#fff", borderRadius: 1 }}
+        />
+      </Box>
+    )}
+  </Stack>
+);
+
 };
 
 export default Navbar;

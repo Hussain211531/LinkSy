@@ -1,11 +1,18 @@
-import { FormControl, MenuItem, Select, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { BiNoEntry } from "react-icons/bi";
+import {
+  FormControl,
+  MenuItem,
+  Select,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import React from "react";
 import HorizontalStack from "./util/HorizontalStack";
 
 const SortBySelect = ({ onSortBy, sortBy, sorts }) => {
+  const theme = useTheme();
+
   return (
-    <HorizontalStack spacing={1}>
+    <HorizontalStack spacing={1} alignItems="center">
       <Typography
         color="text.secondary"
         variant="subtitle2"
@@ -14,22 +21,46 @@ const SortBySelect = ({ onSortBy, sortBy, sorts }) => {
             xs: "none",
             sm: "block",
           },
+          fontWeight: "bold",
+          textTransform: "uppercase",
+          letterSpacing: 0.5,
         }}
       >
         Sort by:
       </Typography>
-      <Select
+
+      <FormControl
         size="small"
-        value={sorts[sortBy]}
-        sx={{ minWidth: 150 }}
-        onChange={onSortBy}
+        sx={{
+          minWidth: 150,
+          borderRadius: 2,
+          boxShadow: theme.shadows[2],
+          backgroundColor: theme.palette.background.paper,
+          '& .MuiInputBase-root': {
+            borderRadius: 2,
+            paddingLeft: 1,
+            paddingRight: 1,
+          },
+        }}
       >
-        {Object.keys(sorts).map((sortName, i) => (
-          <MenuItem value={sorts[sortName]} key={i}>
-            {sorts[sortName]}
-          </MenuItem>
-        ))}
-      </Select>
+        <Select
+          size="small"
+          value={sorts[sortBy]}
+          onChange={onSortBy}
+          sx={{
+            fontWeight: 600,
+            color: theme.palette.text.primary,
+            boxShadow: "0px 1px 4px rgba(0,0,0,0.1)",
+            borderRadius: 2,
+          }}
+        >
+          {Object.keys(sorts).map((sortName, i) => (
+            <MenuItem value={sorts[sortName]} key={i}>
+              {sorts[sortName]}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </HorizontalStack>
   );
 };

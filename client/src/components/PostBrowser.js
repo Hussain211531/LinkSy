@@ -117,27 +117,51 @@ const PostBrowser = (props) => {
   return (
     <>
       <Stack spacing={2}>
-        <Card>
-          <HorizontalStack justifyContent="space-between">
-            {props.createPost && <CreatePost />}
-            <SortBySelect
-              onSortBy={handleSortBy}
-              sortBy={sortBy}
-              sorts={sorts}
-            />
-          </HorizontalStack>
-        </Card>
+        <Card
+  sx={{
+    backgroundColor: "#f5f5f5",
+    padding: 2,
+    borderRadius: 2,
+    boxShadow: "0px 2px 6px rgba(0,0,0,0.1)",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: { xs: "column", sm: "row" },
+    gap: 2,
+  }}
+>
+  {props.createPost && <CreatePost />}
+  <SortBySelect
+    onSortBy={handleSortBy}
+    sortBy={sortBy}
+    sorts={sorts}
+  />
+</Card>
+
 
         {searchExists && (
-          <Box>
-            <Typography variant="h5" gutterBottom>
-              Showing results for "{search.get("search")}"
-            </Typography>
-            <Typography color="text.secondary" variant="span">
-              {count} results found
-            </Typography>
-          </Box>
-        )}
+  <Box
+    sx={{
+      px: 3,
+      py: 2,
+      mb: 2,
+      borderRadius: 3,
+      backgroundColor: "background.paper",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.06)",
+    }}
+  >
+    <Typography variant="h6" gutterBottom fontWeight={600}>
+      🔍 Showing results for&nbsp;
+      <Box component="span" color="primary.main" fontWeight={700}>
+        "{search.get("search")}"
+      </Box>
+    </Typography>
+    <Typography color="text.secondary" variant="body2">
+      {count} {count === 1 ? "result" : "results"} found
+    </Typography>
+  </Box>
+)}
+
 
         {posts.map((post, i) => (
           <PostCard

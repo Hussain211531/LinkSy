@@ -92,7 +92,7 @@ const PostCard = (props) => {
   };
 
   return (
-    <Card sx={{ padding: 0 }} className="post-card">
+    <Card sx={{ padding: 2 }} className="post-card">
       <Box className={preview}>
         <HorizontalStack spacing={0} alignItems="initial">
           <Stack
@@ -103,6 +103,7 @@ const PostCard = (props) => {
               backgroundColor: "grey.100",
               width: "50px",
               padding: theme.spacing(1),
+              borderRight: "1px solid #ccc"
             }}
           >
             <LikeBox
@@ -161,20 +162,48 @@ const PostCard = (props) => {
             </Typography>
 
             {preview !== "secondary" &&
-              (editing ? (
-                <ContentUpdateEditor
-                  handleSubmit={handleSubmit}
-                  originalContent={post.content}
-                />
-              ) : (
-                <Box
-                  maxHeight={maxHeight}
-                  overflow="hidden"
-                  className="content"
-                >
-                  <Markdown content={post.content} />
-                </Box>
-              ))}
+  (editing ? (
+    <ContentUpdateEditor
+      handleSubmit={handleSubmit}
+      originalContent={post.content}
+    />
+  ) : (
+    <>
+      {/* Image Section (optional) */}
+      {post.image && (
+        <Box
+          mt={2}
+          mb={2}
+          sx={{
+            width: "100%",
+            borderRadius: 3,
+            overflow: "hidden",
+            boxShadow: 3,
+            maxHeight: 400,
+          }}
+        >
+          <img
+            src={post.image}
+            alt="Post visual"
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "cover",
+              display: "block",
+            }}
+          />
+        </Box>
+      )}
+
+      {/* Content markdown */}
+      <Box maxHeight={maxHeight} overflow="hidden" className="content">
+        <Markdown content={post.content} />
+      </Box>
+    </>
+  ))}
+
+
+
 
             <HorizontalStack sx={{ mt: 2 }} justifyContent="space-between">
               <HorizontalStack>
