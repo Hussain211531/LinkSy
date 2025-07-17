@@ -25,12 +25,6 @@ LinkSy is a modern, full-stack social media application built using the *MERN st
 
 ---
 
-## 📸 Screenshots
-
-> (Add screenshots here later if needed — login screen, post feed, profile page, etc.)
-
----
-
 ## 📦 Installation & Running Locally
 
 1. Clone the repository:
